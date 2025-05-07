@@ -1,8 +1,8 @@
 #include "../include/computer_club.h"
 
-ComputerClub::ComputerClub(int count, const Time& open, const Time& close, int cost, std::ostream& output)
-        : totalOccupiedTables(0), tableCount(count), openTime(open), closeTime(close), output(output) {
-    output << openTime << std::endl;
+ComputerClub::ComputerClub(int count, const Time& open, const Time& close, int cost)
+        : totalOccupiedTables(0), tableCount(count), openTime(open), closeTime(close) {
+    std::cout << openTime << std::endl;
 
     tables.reserve(count);
     for (int i = 0; i < count; ++i) {
@@ -16,17 +16,17 @@ void ComputerClub::closeClub() {
         totalOccupiedTables--;
         clientToTableMap.erase(clientName);
 
-        output << closeTime << " 11 " << clientName << std::endl;
+        std::cout << closeTime << " 11 " << clientName << std::endl;
     }
 
-    output << closeTime << std::endl;
+    std::cout << closeTime << std::endl;
     for (size_t i = 0; i < tables.size(); ++i) {
-        output << i + 1 << " " << tables[i].revenue << " " << tables[i].totalTime << std::endl;
+        std::cout << i + 1 << " " << tables[i].revenue << " " << tables[i].totalTime << std::endl;
     }
 }
 
 void ComputerClub::handleClientArrived(const Time& time, const std::string& clientName) {
-    output << time << " 1 " << clientName << std::endl;
+    std::cout << time << " 1 " << clientName << std::endl;
 
     // При нормальной работе системы такого не случиться, но перестраховаться стоит
     if (clientName.empty()){
@@ -48,7 +48,7 @@ void ComputerClub::handleClientArrived(const Time& time, const std::string& clie
 }
 
 void ComputerClub::handleClientSat(const Time& time, const std::string& clientName, int tableNum) {
-    output << time << " 2 " << clientName << " " << tableNum<< std::endl;
+    std::cout << time << " 2 " << clientName << " " << tableNum<< std::endl;
 
     if (clientToTableMap.find(clientName) == clientToTableMap.end()) {
         generateError(time, "ClientUnknown");
@@ -72,7 +72,7 @@ void ComputerClub::handleClientSat(const Time& time, const std::string& clientNa
 }
 
 void ComputerClub::handleClientWaiting(const Time& time, const std::string& clientName) {
-    output << time << " 3 " << clientName << " " << std::endl;
+    std::cout << time << " 3 " << clientName << " " << std::endl;
 
     if (clientToTableMap.find(clientName) == clientToTableMap.end()) {
         generateError(time, "ClientUnknown");
@@ -85,7 +85,7 @@ void ComputerClub::handleClientWaiting(const Time& time, const std::string& clie
     }
 
     if (queue.size() > tableCount) {
-        output << time << " 11 " << clientName << std::endl;
+        std::cout << time << " 11 " << clientName << std::endl;
         clientToTableMap.erase(clientName);
     } else {
         queue.push(clientName);
@@ -93,7 +93,7 @@ void ComputerClub::handleClientWaiting(const Time& time, const std::string& clie
 }
 
 void ComputerClub::handleClientLeft(const Time& time, const std::string& clientName) {
-    output << time << " 4 " << clientName << std::endl;
+    std::cout << time << " 4 " << clientName << std::endl;
 
     if (clientToTableMap.find(clientName) == clientToTableMap.end()) {
         generateError(time, "ClientUnknown");
@@ -114,33 +114,11 @@ void ComputerClub::handleClientLeft(const Time& time, const std::string& clientN
             totalOccupiedTables++;
             clientToTableMap[nextClient] = tableIndex;
 
-            output << time << " 12 " << nextClient << " " << tableIndex + 1 << std::endl;
+            std::cout << time << " 12 " << nextClient << " " << tableIndex + 1 << std::endl;
         }
     }
 }
 
 void ComputerClub::generateError(const Time& time, const std::string& error) {
-    output << time << " 13 " << error << std::endl;
-}
-
-bool ComputerClub::isClientInside(const std::string &clientName) {
-    return clientToTableMap.find(clientName) != clientToTableMap.end();
-}
-
-int ComputerClub::getClientTable(const std::string &clientName) {
-    auto it = clientToTableMap.find(clientName);
-
-    if (it == clientToTableMap.end()) {
-        throw std::runtime_error("Client not found");
-    }
-
-    if (it->second == -1) {
-        return -1;
-    }
-
-    return it->second + 1;
-}
-
-size_t ComputerClub::getQueueSize() {
-    return queue.size();
+    std::cout << time << " 13 " << error << std::endl;
 }

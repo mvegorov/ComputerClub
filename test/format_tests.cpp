@@ -43,5 +43,11 @@ TEST(InputParserTest, EventsWithSpaces) {
             "09:00 2 client1 1\n"
     );
 
-    EXPECT_THROW(InputParser::parseEvents(input), std::runtime_error);
+    InputParser parser;
+    auto events = InputParser::parseEvents(input);
+    ASSERT_EQ(events.size(), 2);
+    EXPECT_NO_THROW({
+        dynamic_cast<ClientArrivedEvent&>(*events[0]);
+        dynamic_cast<ClientSatEvent&>(*events[1]);
+    });
 }
