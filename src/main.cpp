@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         int hourCost = InputParser::parseHourCost(inputFile);
         auto events = InputParser::parseEvents(inputFile);
 
-        ComputerClub club(tableCount, openTime, closeTime, hourCost);
+        ComputerClub club(tableCount, openTime, closeTime, hourCost, std::cout);
 
         for (const auto& event : events) {
             event->handle(club);
