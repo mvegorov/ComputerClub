@@ -1,4 +1,4 @@
-#include "../include/time.h"
+#include "../include/mytime.h"
 
 Time::Time() : hours(0), minutes(0) {}
 Time::Time(int h, int m) : hours(h), minutes(m) {}
@@ -33,7 +33,9 @@ Time& Time::operator+=(const Time& other) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Time& time) {
-    os << std::setfill('0') << std::setw(2) << time.hours << ":"
-       << std::setfill('0') << std::setw(2) << time.minutes;
+    if (time.hours < 10) os << '0';
+    os << time.hours << ":";
+    if (time.minutes < 10) os << '0';
+    os << time.minutes;
     return os;
 }

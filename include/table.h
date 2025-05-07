@@ -1,7 +1,7 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include "time.h"
+#include "mytime.h"
 #include <string>
 
 class Table {

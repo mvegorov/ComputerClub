@@ -1,5 +1,5 @@
 #include "../include/computer_club.h"
-#include "../include/input_validator.h"
+#include "../include/input_parser.h"
 #include <iostream>
 #include <fstream>
 
@@ -14,12 +14,12 @@ int main(int argc, char* argv[]) {
         std::ifstream inputFile(argv[1]);
         InputParser::validateFileOpening(inputFile);
 
-        int tableCount = InputParser::readAndValidateTableCount(inputFile);
-        auto [openTime, closeTime] = InputParser::readAndValidateWorkingHours(inputFile);
-        int hourCost = InputParser::readAndValidateHourCost(inputFile);
+        int tableCount = InputParser::parseTableCount(inputFile);
+        auto [openTime, closeTime] = InputParser::parseWorkingHours(inputFile);
+        int hourCost = InputParser::parseHourCost(inputFile);
         auto events = InputParser::parseEvents(inputFile);
 
-        ComputerClub club(tableCount, openTime, closeTime, hourCost);
+        ComputerClub club(tableCount, openTime, closeTime, hourCost, std::cout);
 
         for (const auto& event : events) {
             event->handle(club);

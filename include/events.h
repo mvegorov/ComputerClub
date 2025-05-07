@@ -1,7 +1,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "time.h"
+#include "mytime.h"
 #include <string>
 #include <memory>
 #include <iostream>

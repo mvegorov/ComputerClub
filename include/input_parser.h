@@ -1,7 +1,7 @@
 #ifndef INPUT_VALIDATOR_H
 #define INPUT_VALIDATOR_H
 
-#include "time.h"
+#include "mytime.h"
 #include "events.h"
 #include <string>
 #include <vector>
@@ -10,9 +10,9 @@
 class InputParser {
 public:
     static std::vector<std::string> splitAndValidateSpaces(const std::string& line);
-    static int readAndValidateTableCount(std::istream& input);
-    static std::pair<Time, Time> readAndValidateWorkingHours(std::istream& input);
-    static int readAndValidateHourCost(std::istream& input);
+    static int parseTableCount(std::istream& input);
+    static std::pair<Time, Time> parseWorkingHours(std::istream& input);
+    static int parseHourCost(std::istream& input);
     static std::vector<EventPtr> parseEvents(std::istream& input);
     static void validateFileOpening(std::ifstream& file);
 

@@ -1,6 +1,5 @@
-#include "../include/input_validator.h"
+#include "../include/input_parser.h"
 #include <algorithm>
-#include <cctype>
 #include <sstream>
 #include <fstream>
 
@@ -49,7 +48,7 @@ vector<string> InputParser::splitAndValidateSpaces(const string& line) {
     return parts;
 }
 
-int InputParser::readAndValidateTableCount(istream& input) {
+int InputParser::parseTableCount(istream& input) {
     string line;
     if (!getline(input, line)) {
         throw runtime_error("Expected number of tables");
@@ -103,7 +102,7 @@ bool InputParser::validateClientName(const std::string& nameStr) {
     return true;
 }
 
-pair<Time, Time> InputParser::readAndValidateWorkingHours(istream& input) {
+pair<Time, Time> InputParser::parseWorkingHours(istream& input) {
     string line;
     if (!getline(input, line)) {
         throw runtime_error("Expected opening and closing time");
@@ -132,7 +131,7 @@ pair<Time, Time> InputParser::readAndValidateWorkingHours(istream& input) {
     return {openTime, closeTime};
 }
 
-int InputParser::readAndValidateHourCost(istream& input) {
+int InputParser::parseHourCost(istream& input) {
     string line;
     if (!getline(input, line)) {
         throw runtime_error("Expected hour cost");

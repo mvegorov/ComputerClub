@@ -1,9 +1,8 @@
 #ifndef COMPUTER_CLUB_H
 #define COMPUTER_CLUB_H
 
-#include "time.h"
+#include "mytime.h"
 #include "events.h"
-#include "client.h"
 #include "table.h"
 #include <vector>
 #include <map>
@@ -30,10 +29,11 @@ private:
     std::vector<Table> tables;
     int totalOccupiedTables;
     std::queue<std::string> queue;
+    std::ostream& output;
 
-    static void generateError(const Time& time, const std::string& error);
+    void generateError(const Time& time, const std::string& error);
 public:
-    ComputerClub(int count, const Time& open, const Time& close, int cost);
+    ComputerClub(int count, const Time& open, const Time& close, int cost, std::ostream& output);
 
     void closeClub();
 
@@ -44,6 +44,14 @@ public:
     void handleClientWaiting(const Time& time, const std::string& clientName);
 
     void handleClientLeft(const Time& time, const std::string& clientName);
+
+    bool isClientInside(const std::string& clientName);
+
+    int getClientTable(const std::string& clientName);
+
+    bool isClientInQueue(const std::string& clientName);
+
+    size_t getQueueSize();
 };
 
 #endif
